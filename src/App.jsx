@@ -9,6 +9,7 @@ import { Input } from "./components/ui/input";
 import { Label } from "./components/ui/label";
 import Papa from "papaparse";
 import TableData from "./TableData";
+import { useToast } from "@/hooks/use-toast";
 import {
   Command,
   CommandEmpty,
@@ -35,6 +36,7 @@ import {
 } from "@/components/ui/form";
 
 function App() {
+  const { toast } = useToast();
   const [open, setOpen] = useState(false);
   const [csvData, setCsvData] = useState([]);
   const [tableData, setTableData] = useState([]);
@@ -105,6 +107,11 @@ function App() {
         }
 
         if (results.length >= limit) {
+          toast({
+            variant: "destructive",
+            title: "Filter data too large",
+            description: "Please add conditions: Bankname, Country",
+          });
           break;
         }
       }
